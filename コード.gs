@@ -197,7 +197,7 @@ function setDate(sheet, userDataRow, text, event) {
         
       case '月':
         var m = Number(text.match(/\d+/g)[0]);
-        date = cur_date.set('month', m);
+        date = cur_date.set('month', m-1);
         if(match[1] === '日') {
           var d = Number(text.match(/\d+/g)[1]);
           date = cur_date.set('date', d);
