@@ -266,7 +266,7 @@ function setDate(sheet, userDataRow, text, event) {
   if(date === 'Invalid date') {
     return reply(event, 'わかんない！いつ？');
   } else if(date < Moment.moment()) {
-    return reply(event, '未来の日時で教えて！');
+    return reply(event, 'わかんない！いつ？');
   }
   
   setTrigger(sheet, userDataRow, date);
