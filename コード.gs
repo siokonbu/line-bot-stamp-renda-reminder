@@ -61,10 +61,15 @@ function doPost(e) {
           break;
           
         case 2:
-          if(text == "今" || text == "いま") {
-            pushBomb(sheet, userDataRow, to);
+          if(text == "キャンセル") {
+            cancel(sheet, userDataRow);
+            reply(event, "取り消したよ！またなんかあったらいってね〜");
           } else {
-            setDate(sheet, userDataRow, text, event);
+            if(text == "今" || text == "いま") {
+              pushBomb(sheet, userDataRow, to);
+            } else {
+              setDate(sheet, userDataRow, text, event);
+            }
           }
           break;
           
@@ -125,7 +130,7 @@ function setDate(sheet, userDataRow, text, event) {
   
   //var sheet = 'debug';
   //var userDataRow = 1;
-  //var text = '明日の9時';
+  //var text = '3月11';
   
   // 全角英数を半角に変換
   text = text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
@@ -138,7 +143,7 @@ function setDate(sheet, userDataRow, text, event) {
   
   var match = text.match(/[\u30e0-\u9fcf]+/g);
   
-    Logger.log(match);
+  Logger.log(match);
   if(match === null) {
     var koron = text.match(/\d+:\d+/g);
     if(koron) {
@@ -195,7 +200,7 @@ function setDate(sheet, userDataRow, text, event) {
         date = cur_date.set('month', m);
         if(match[1] === '日') {
           var d = Number(text.match(/\d+/g)[1]);
-          date = cur_date.set('day', d);
+          date = cur_date.set('date', d);
           if(match[2] === '時') {
             var h = Number(text.match(/\d+/g)[2]);
             date = cur_date.set('hour', h);
@@ -217,11 +222,11 @@ function setDate(sheet, userDataRow, text, event) {
         
       case '日':
         var d = Number(text.match(/\d+/g)[0]);
-        date = cur_date.set('day', d);
-        if(match[2] === '時') {
+        date = cur_date.set('date', d);
+        if(match[1] === '時') {
           var h = Number(text.match(/\d+/g)[1]);
           date = cur_date.set('hour', h);
-          if(match[3] === '分') {
+          if(match[2] === '分') {
             var m = Number(text.match(/\d+/g)[2]);
             date = cur_date.set('minute', m);
           } else {
